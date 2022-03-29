@@ -8,8 +8,14 @@ import androidx.room.RoomDatabase
 @Database(entities = [], version = 1)
 abstract class JokeDatabase : RoomDatabase() {
 
+    abstract fun getJokeDao(): JokeDao
 
     companion object {
+
+        /*
+        * Object with function to create a single instance of the DB if not null
+         */
+
         private var dbInstance: JokeDatabase? = null
 
         fun getDatabaseInstance(context: Context): JokeDatabase {

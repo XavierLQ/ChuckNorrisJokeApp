@@ -17,7 +17,7 @@ interface JokeAPI {
     @GET(MultipleJokeURL)
     suspend fun getManyJokes(
         @Query("exclude") Explicit:String
-    ): Response<Jokes>
+    ): Response<List<JokeItem>>
 
     @GET(SingleJokeURL)
     suspend fun getJokeWithCustomName(
