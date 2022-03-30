@@ -10,15 +10,15 @@ interface JokeRepository {
     suspend fun getJokeWithCustomName(firstName:String,lastName:String,Explicit:String):Response<JokeItem>
 }
 
-class JokeRepoImplementation(val jokeService:JokeAPI){
+class JokeRepoImplementation(val jokeService:JokeAPI): JokeRepository{
 
-    suspend fun getJoke(explicit:String):Response<JokeItem>{
+    override suspend fun getJoke(explicit:String):Response<JokeItem>{
         return jokeService.getJoke(explicit)
     }
-    suspend fun getManyJokes(explicit:String):Response<List<JokeItem>>{
+    override suspend fun getManyJokes(explicit:String):Response<List<JokeItem>>{
         return jokeService.getManyJokes(explicit)
     }
-    suspend fun getJokeWithCustomName(firstName:String,lastName:String,explicit:String):Response<JokeItem>{
+    override suspend fun getJokeWithCustomName(firstName:String, lastName:String, explicit:String):Response<JokeItem>{
         return jokeService.getJokeWithCustomName(firstName,lastName,explicit)
     }
 }

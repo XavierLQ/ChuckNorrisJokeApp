@@ -5,19 +5,19 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "JokeItemTable")
+//@Entity(tableName = "JokeItemTable")
 data class JokeItem(
 
-    @PrimaryKey
-    @ColumnInfo
+//    @PrimaryKey
+//    @ColumnInfo
     @SerializedName("id")
     val id: Int,
 
-    @ColumnInfo
+//    @ColumnInfo
     @SerializedName("categories")
     val categories: List<Any>,
 
-    @ColumnInfo
+//    @ColumnInfo
     @SerializedName("joke")
     val joke: String
 )
