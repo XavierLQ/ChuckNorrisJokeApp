@@ -9,16 +9,19 @@ import retrofit2.http.Query
 
 interface JokeAPI {
 
+    //http://api.icndb.com/jokes/random?exclude=
     @GET(SingleJokeURL)
     suspend fun getJoke(
         @Query("exclude") Explicit:String
     ): Response<JokeItem>
 
+    //http://api.icndb.com/jokes/random/4
     @GET(MultipleJokeURL)
     suspend fun getManyJokes(
         @Query("exclude") Explicit:String
     ): Response<List<JokeItem>>
 
+    //http://api.icndb.com/jokes/random?firstName=John&lastName=Doe&exclude=
     @GET(SingleJokeURL)
     suspend fun getJokeWithCustomName(
         @Query("firstName") firstName:String,
@@ -31,11 +34,11 @@ interface JokeAPI {
 
     companion object{
 
-        val BaseURL = "http://api.icndb.com/jokes"
+        val BaseURL = "http://api.icndb.com/jokes/"
 
-        const val SingleJokeURL = "/random"
+        const val SingleJokeURL = "random/"
         const val MultipleJokeURL = "random/4"
-        const val JokeCountURL = "/count"
+        const val JokeCountURL = "count"
 
     }
 }

@@ -1,21 +1,18 @@
 package com.example.chucknorrisjokeapp
 
 import android.app.Application
-import com.example.chucknorrisjokeapp.di.AppComponent
-import com.example.chucknorrisjokeapp.di.AppModule
-import com.example.chucknorrisjokeapp.di.DaggerAppComponent
+import com.example.chucknorrisjokeapp.di.NetworkModule
+import com.example.chucknorrisjokeapp.di.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class JokeApp: Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-        jokeComponent = DaggerAppComponent.builder()
-            .appModule(AppModule(this))
-            .build()
-    }
-
-    companion object {
-        lateinit var jokeComponent: AppComponent
-    }
-}
+        startKoin {
+            androidContext(this@JokeApp)
+            modules(listOf(NetworkModule, viewModelModule))
+        }
+}}

@@ -2,6 +2,7 @@ package com.example.chucknorrisjokeapp.viewmodel
 
 import android.app.Application
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.chucknorrisjokeapp.database.DatabaseRepository
 
@@ -13,9 +14,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
-import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+
+class MainViewModel(
     private val jokeRepo : JokeRepository
     //private val dbRepo : DatabaseRepository
                     ): ViewModel() {
@@ -28,14 +29,15 @@ class MainViewModel @Inject constructor(
 
     fun getRandomJoke(explicit:String){
 
-        _jokeLiveData.postValue(JokeLoadingState.LOADING)
+        //_jokeLiveData.postValue(JokeLoadingState.LOADING)
         viewModelScope.launch(coroutineDispatcher) {
 
             try{
                 val response = jokeRepo.getJoke(explicit)
                 if (response.isSuccessful){
+                    Log.d("response success",response.body().toString())
                     response.body()?.let {
-                        _jokeLiveData.postValue(JokeLoadingState.SUCCESS(it))
+                        _jokeLiveData.postValue(JokeLoadingState.SUCCESS(it.joke))
                     }?: throw Exception("no response from joke")
 
                     } else { throw Exception("response unsuccessful") }
