@@ -2,48 +2,52 @@ package com.example.chucknorrisjokeapp.view
 
 import android.app.AlertDialog
 import android.content.DialogInterface
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
-import android.util.Log
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.chucknorrisjokeapp.R
-import com.example.chucknorrisjokeapp.databinding.FragmentMainBinding
-import com.example.chucknorrisjokeapp.model.JokeItem
+import com.example.chucknorrisjokeapp.databinding.FragmentCustomJokeBinding
 import com.example.chucknorrisjokeapp.model.Jokes
 import com.example.chucknorrisjokeapp.viewmodel.JokeLoadingState
 import com.example.chucknorrisjokeapp.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class MainFragment : Fragment() {
 
-    private val binding by lazy { FragmentMainBinding.inflate(layoutInflater)}
+class CustomJokeFragment : Fragment() {
+
+    private val binding by lazy {
+        FragmentCustomJokeBinding.inflate(layoutInflater)
+    }
 
     private val viewModel: MainViewModel by sharedViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
 
-            viewModel.getRandomJoke("")
+        viewModel.getCustomJoke("", "", "")
+        binding.customJokeButton2.setOnClickListener {
+            var firstName = binding.firstNameEditText.text.toString()
+            var lastName = binding.lastNameEditText.text.toString()
+            viewModel.getCustomJoke(firstName, lastName, "")
+
+
             viewModel.jokesLiveData.observe(viewLifecycleOwner) { state ->
                 when (state) {
                     is JokeLoadingState.SUCCESS<*> -> {
 
                         val jokeReceived = state.response as? Jokes
 
-                        binding.randomJokeButton.setOnClickListener {
+                        binding.customJokeButton2.setOnClickListener {
                             AlertDialog.Builder(this.requireContext())
                                 .setMessage(jokeReceived?.value?.joke)
                                 .setCancelable(true)
@@ -51,7 +55,7 @@ class MainFragment : Fragment() {
                                 { dialog, id -> dialog.cancel() })
                                 .create().show()
 
-                            viewModel.getRandomJoke("")
+                            viewModel.getCustomJoke("", "", "")
                         }
                     }
                     is JokeLoadingState.ERROR -> {
@@ -63,16 +67,6 @@ class MainFragment : Fragment() {
                     }
                 }
             }
-
-
-        binding.customJokeButton.setOnClickListener{
-            findNavController()
-                .navigate(R.id.action_mainFragment_to_customJokeFragment)
-        }
-
-        binding.multipleJokesButton.setOnClickListener{
-            findNavController()
-                .navigate(R.id.action_mainFragment_to_jokeListFragment)
         }
 
 
@@ -81,8 +75,8 @@ class MainFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            MainFragment().apply {
+        fun newInstance(param1: String, param2: String) =
+            JokeListFragment().apply {
             }
     }
 }

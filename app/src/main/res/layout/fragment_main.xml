@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.MainFragment">
 
-    <!--    -->
-    <!--    <EditText-->
-    <!--        android:id="@+id/firstNameEditText"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"/>-->
-    <!--    -->
-    <!--    <EditText-->
-    <!--        android:id="@+id/lastNameEditText"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"/>-->
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/randomJokeButton"
         android:layout_width="wrap_content"

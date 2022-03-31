@@ -9,5 +9,22 @@
         android:id="@+id/mainFragment"
         android:name="com.example.chucknorrisjokeapp.view.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_jokeListFragment"
+            app:destination="@id/jokeListFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_customJokeFragment"
+            app:destination="@id/customJokeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customJokeFragment"
+        android:name="com.example.chucknorrisjokeapp.view.CustomJokeFragment"
+        android:label="fragment_custom_joke"
+        tools:layout="@layout/fragment_custom_joke" />
+    <fragment
+        android:id="@+id/jokeListFragment"
+        android:name="com.example.chucknorrisjokeapp.view.JokeListFragment"
+        android:label="fragment_joke_list"
+        tools:layout="@layout/fragment_joke_list" />
 </navigation>

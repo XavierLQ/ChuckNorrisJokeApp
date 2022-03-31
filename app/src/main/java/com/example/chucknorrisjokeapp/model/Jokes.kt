@@ -7,5 +7,5 @@ data class Jokes(
     @SerializedName("type")
     val type: String,
     @SerializedName("value")
-    val jokeItem: List<JokeItem>
+    val value: JokeItem
 )

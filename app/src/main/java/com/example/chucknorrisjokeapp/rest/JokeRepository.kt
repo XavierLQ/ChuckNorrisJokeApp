@@ -1,24 +1,22 @@
 package com.example.chucknorrisjokeapp.rest
 
+import android.util.Log
 import com.example.chucknorrisjokeapp.model.JokeItem
+import com.example.chucknorrisjokeapp.model.JokeList
 import com.example.chucknorrisjokeapp.model.Jokes
 import retrofit2.Response
 
 interface JokeRepository {
-    suspend fun getJoke(Explicit:String):Response<JokeItem>
-    suspend fun getManyJokes(explicit:String):Response<List<JokeItem>>
-    suspend fun getJokeWithCustomName(firstName:String,lastName:String,Explicit:String):Response<JokeItem>
+    suspend fun getJoke(exclude:String):Response<Jokes>
+    suspend fun getManyJokes(exclude:String):Response<JokeList>
+    suspend fun getJokeWithCustomName(firstName:String,lastName:String,exclude:String):Response<Jokes>
 }
 
-class JokeRepoImplementation(val jokeService:JokeAPI): JokeRepository{
-
-    override suspend fun getJoke(explicit:String):Response<JokeItem>{
-        return jokeService.getJoke(explicit)
-    }
-    override suspend fun getManyJokes(explicit:String):Response<List<JokeItem>>{
-        return jokeService.getManyJokes(explicit)
-    }
-    override suspend fun getJokeWithCustomName(firstName:String, lastName:String, explicit:String):Response<JokeItem>{
-        return jokeService.getJokeWithCustomName(firstName,lastName,explicit)
-    }
+class JokeRepoImplementation(private val jokeService:JokeAPI): JokeRepository{
+    override suspend fun getJoke(exclude:String):Response<Jokes> =
+        jokeService.getJoke(exclude)
+    override suspend fun getManyJokes(exclude:String):Response<JokeList> =
+        jokeService.getManyJokes(exclude)
+    override suspend fun getJokeWithCustomName(firstName:String, lastName:String, exclude:String):Response<Jokes> =
+        jokeService.getJokeWithCustomName(firstName,lastName,exclude)
 }

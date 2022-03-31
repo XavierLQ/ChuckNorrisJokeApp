@@ -35,9 +35,8 @@ class MainViewModel(
             try{
                 val response = jokeRepo.getJoke(explicit)
                 if (response.isSuccessful){
-                    Log.d("response success",response.body().toString())
                     response.body()?.let {
-                        _jokeLiveData.postValue(JokeLoadingState.SUCCESS(it.joke))
+                        _jokeLiveData.postValue(JokeLoadingState.SUCCESS(it))
                     }?: throw Exception("no response from joke")
 
                     } else { throw Exception("response unsuccessful") }
@@ -49,43 +48,45 @@ class MainViewModel(
         }
     }
 
-    fun getCustomJoke(firstName:String, lastName:String, explicit: String){
+    fun getCustomJoke(firstName:String, lastName:String, explicit:String){
 
-        _jokeLiveData.postValue(JokeLoadingState.LOADING)
+        //_jokeLiveData.postValue(JokeLoadingState.LOADING)
         viewModelScope.launch(coroutineDispatcher) {
 
             try{
                 val response = jokeRepo.getJokeWithCustomName(firstName, lastName, explicit)
-                if(response.isSuccessful){
+                if (response.isSuccessful){
                     response.body()?.let {
                         _jokeLiveData.postValue(JokeLoadingState.SUCCESS(it))
                     }?: throw Exception("no response from joke")
+
                 } else { throw Exception("response unsuccessful") }
-            }catch(e:Exception){
+
+            }
+            catch(e: Exception){
                 _jokeLiveData.postValue(JokeLoadingState.ERROR(e))
             }
         }
     }
 
-//    fun getJokeListForDB(explicit:String){
-//
-//        _jokeLiveData.postValue(JokeLoadingState.LOADING)
-//        viewModelScope.launch(coroutineDispatcher) {
-//
-//            try {
-//
-//                val response = jokeRepo.getManyJokes(explicit)
-//                if(response.isSuccessful) {
-//                    response.body()?.let {
-//                        dbRepo.insertAllJokesToDB(it)
-//                        val dbData = dbRepo.getAllJokesFromDB()
-//                        _jokeLiveData.postValue(JokeLoadingState.SUCCESS(dbData))
-//                    } ?: throw Exception("null return")
-//                } else{ throw Exception("response unsuccessful")}
-//            }
-//            catch (e:Exception){
-//                _jokeLiveData.postValue(JokeLoadingState.ERROR(e))
-//            }
-//        }
-//    }
+    fun getMultipleJokes(explicit:String){
+
+        //_jokeLiveData.postValue(JokeLoadingState.LOADING)
+        viewModelScope.launch(coroutineDispatcher) {
+
+            try{
+                val response = jokeRepo.getManyJokes( explicit)
+                if (response.isSuccessful){
+                    response.body()?.let {
+                        _jokeLiveData.postValue(JokeLoadingState.SUCCESS(it))
+                    }?: throw Exception("no response from joke")
+
+                } else { throw Exception("response unsuccessful") }
+
+            }
+            catch(e: Exception){
+                _jokeLiveData.postValue(JokeLoadingState.ERROR(e))
+            }
+        }
+    }
 }

@@ -7,21 +7,24 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.chucknorrisjokeapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
 
     lateinit var appBarConfiguration:AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_container)as NavHostController
-//        val navController = navHostFragment
-//
-//        appBarConfiguration = AppBarConfiguration(navController.graph)
-//
-//        setupActionBarWithNavController(navController, appBarConfiguration)
+        val navController = findNavController(R.id.nav_host_fragment_container)as NavHostController
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onSupportNavigateUp(): Boolean {
