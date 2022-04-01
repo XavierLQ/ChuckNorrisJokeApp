@@ -34,7 +34,7 @@ interface JokeAPI {
 
         const val BaseURL = "https://api.icndb.com/"
         const val SingleJokeURL = "jokes/random"
-        const val MultipleJokeURL = "jokes"
+        const val MultipleJokeURL = "jokes/random/20"
 
     }
 }

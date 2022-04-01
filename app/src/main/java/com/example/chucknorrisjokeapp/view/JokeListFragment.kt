@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.chucknorrisjokeapp.Adapter.JokeAdapter
 import com.example.chucknorrisjokeapp.R
 import com.example.chucknorrisjokeapp.databinding.FragmentCustomJokeBinding
@@ -56,16 +57,23 @@ class JokeListFragment : Fragment() {
                     is JokeLoadingState.LOADING ->{Log.d("received jokes", state.toString())}
 
                     is JokeLoadingState.SUCCESS<*> -> {
-
                         val receivedJokes: JokeList? = state.response as? JokeList
-
                         if (receivedJokes != null) {
                             jokeAdapter.updateJokes(receivedJokes.value)
                         }
 
-                            Log.d("received jokes", state.toString())
+                        binding.jokeRecycler.addOnScrollListener(object :
+                            RecyclerView.OnScrollListener() {
+                            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                                super.onScrolled(recyclerView, dx, dy)
+                                if (!binding.jokeRecycler.canScrollVertically(1)) {
+                                    binding.jokeRecycler.adapter = jokeAdapter
+                                }
+                            }
+                        })
 
-                        }
+
+                    }
 
                     is JokeLoadingState.ERROR -> {
                         Log.d("received jokes", state.toString())
